@@ -1,0 +1,89 @@
+import { useCallback, useMemo, useState } from 'react';
+import { useInfiniteProducts } from '../hooks/useProductsQueries';
+import { InfiniteScrollTrigger } from './InfiniteScrollTrigger';
+import { ProductDetailDrawer } from './ProductDetailDrawer';
+import { ProductGrid } from './ProductGrid';
+import { ProductListError } from './ProductListError';
+import { ProductListLoading } from './ProductListLoading';
+import { ProductListLoadingMore } from './ProductListLoadingMore';
+
+/** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
+export function ProductList() {
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    null,
+  );
+
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteProducts();
+
+  const products = useMemo(
+    () => data?.pages.flatMap((page) => page.products) ?? [],
+    [data],
+  );
+
+  const canLoadMorePages = Boolean(hasNextPage) && !isFetchingNextPage;
+
+  const handleLoadMore = useCallback(() => {
+    if (canLoadMorePages) {
+      // Fetch the next page; React Query appends it to the cache (data.pages).
+      void fetchNextPage();
+    }
+  }, [canLoadMorePages, fetchNextPage]);
+
+  const handleProductClick = useCallback((productId: number) => {
+    setSelectedProductId(productId);
+  }, []);
+
+  const handleDrawerClose = useCallback(() => {
+    setSelectedProductId(null);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <header className="border-b border-slate-800 bg-slate-900/50 px-6 py-8 backdrop-blur">
+        <div className="mx-auto max-w-7xl">
+          <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+          <p className="mt-2 text-slate-400">
+            Browse the catalog — scroll for more, click a card for details.
+          </p>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-7xl px-6 py-8">
+        {isLoading && <ProductListLoading />}
+
+        {isError && (
+          <ProductListError message={error?.message} />
+        )}
+
+        {!isLoading && !isError && (
+          <>
+            <ProductGrid
+              products={products}
+              onProductClick={handleProductClick}
+            />
+
+            {isFetchingNextPage && <ProductListLoadingMore />}
+
+            <InfiniteScrollTrigger
+              onIntersect={handleLoadMore}
+              enabled={canLoadMorePages}
+            />
+          </>
+        )}
+      </main>
+
+      <ProductDetailDrawer
+        productId={selectedProductId}
+        onClose={handleDrawerClose}
+      />
+    </div>
+  );
+}
