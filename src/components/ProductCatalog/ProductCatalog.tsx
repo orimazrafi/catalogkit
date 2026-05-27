@@ -1,14 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useInfiniteProducts } from '../hooks/useProductsQueries';
-import { InfiniteScrollTrigger } from './InfiniteScrollTrigger';
-import { ProductDetailDrawer } from './ProductDetailDrawer';
-import { ProductGrid } from './ProductGrid';
+import { useInfiniteProducts } from '../../hooks/useProductsQueries';
+import { ProductDetailDrawer } from '../ProductDetailDrawer';
+import { ProductCatalogContent } from './ProductCatalogContent';
 import { ProductListError } from './ProductListError';
 import { ProductListLoading } from './ProductListLoading';
-import { ProductListLoadingMore } from './ProductListLoadingMore';
 
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
-export function ProductList() {
+export function ProductCatalog() {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     null,
   );
@@ -59,24 +57,16 @@ export function ProductList() {
       <main className="mx-auto max-w-7xl px-6 py-8">
         {isLoading && <ProductListLoading />}
 
-        {isError && (
-          <ProductListError message={error?.message} />
-        )}
+        {isError && <ProductListError message={error?.message} />}
 
         {!isLoading && !isError && (
-          <>
-            <ProductGrid
-              products={products}
-              onProductClick={handleProductClick}
-            />
-
-            {isFetchingNextPage && <ProductListLoadingMore />}
-
-            <InfiniteScrollTrigger
-              onIntersect={handleLoadMore}
-              enabled={canLoadMorePages}
-            />
-          </>
+          <ProductCatalogContent
+            products={products}
+            onProductClick={handleProductClick}
+            isFetchingNextPage={isFetchingNextPage}
+            canLoadMorePages={canLoadMorePages}
+            onLoadMore={handleLoadMore}
+          />
         )}
       </main>
 
