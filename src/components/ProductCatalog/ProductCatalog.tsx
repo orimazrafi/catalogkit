@@ -39,9 +39,6 @@ export function ProductCatalog() {
     setSelectedProductId(productId);
   }, []);
 
-  const handleDrawerClose = useCallback(() => {
-    setSelectedProductId(null);
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -72,7 +69,9 @@ export function ProductCatalog() {
 
       <ProductDetailDrawer
         productId={selectedProductId}
-        onClose={handleDrawerClose}
+        onClose={() => {  
+          setSelectedProductId(null);
+        }}
       />
     </div>
   );
