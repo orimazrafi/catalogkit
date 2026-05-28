@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
+import { useProductIdQueryParam } from '../../hooks/useProductIdQueryParam';
 import { useInfiniteProducts } from '../../hooks/useProductsQueries';
 import { ProductDetailDrawer } from '../ProductDetailDrawer';
 import { ProductCatalogContent } from './ProductCatalogContent';
@@ -7,9 +8,12 @@ import { ProductListLoading } from './ProductListLoading';
 
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
 export function ProductCatalog() {
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(
-    null,
-  );
+  const {
+    selectedProductId,
+    setSelectedProductId,
+    clearSelectedProductId,
+  } = useProductIdQueryParam();
+  const lastFocusedProductRef = useRef<HTMLButtonElement | null>(null);
 
   const {
     data,
@@ -35,10 +39,20 @@ export function ProductCatalog() {
     }
   }, [canLoadMorePages, fetchNextPage]);
 
-  const handleProductClick = useCallback((productId: number) => {
-    setSelectedProductId(productId);
-  }, []);
+  const handleProductClick = useCallback(
+    (productId: number, triggerElement: HTMLButtonElement) => {
+      lastFocusedProductRef.current = triggerElement;
+      setSelectedProductId(productId);
+    },
+    [setSelectedProductId],
+  );
 
+  const handleDrawerClose = useCallback(() => {
+    clearSelectedProductId();
+    requestAnimationFrame(() => {
+      lastFocusedProductRef.current?.focus();
+    });
+  }, [clearSelectedProductId]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -69,9 +83,7 @@ export function ProductCatalog() {
 
       <ProductDetailDrawer
         productId={selectedProductId}
-        onClose={() => {  
-          setSelectedProductId(null);
-        }}
+        onClose={handleDrawerClose}
       />
     </div>
   );

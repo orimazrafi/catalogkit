@@ -1,8 +1,9 @@
 import type { Product } from '../../types/product';
+import type { MouseEvent } from 'react';
 
 interface ProductCardProps {
   product: Product;
-  onClick: () => void;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 /** Clickable product summary card for the catalog grid. */

@@ -5,7 +5,7 @@ import { ProductListLoadingMore } from './ProductListLoadingMore';
 
 interface ProductCatalogContentProps {
   products: Product[];
-  onProductClick: (productId: number) => void;
+  onProductClick: (productId: number, triggerElement: HTMLButtonElement) => void;
   isFetchingNextPage: boolean;
   canLoadMorePages: boolean;
   onLoadMore: () => void;
