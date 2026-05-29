@@ -52,8 +52,7 @@ src/
 ├── features/
 │   └── products/              # Product domain (feature-sliced)
 │       ├── api/
-│       │   ├── client.ts            # Axios instance + React Query keys
-│       │   └── productsApi.ts       # getProducts, getProductDetail
+│       │   └── productsApi.ts       # Query keys, getProducts, getProductDetail
 │       ├── hooks/
 │       │   └── useProductsQueries.ts
 │       ├── types/
@@ -70,6 +69,7 @@ src/
 │   ├── useEscapeKey.ts                # Generic keyboard hook
 │   └── useQueryParam.ts               # Sync positive int with ?key= in URL
 └── lib/
+    ├── apiClient.ts               # Global Axios instance
     └── searchParams.ts            # URL search param utilities
 ```
 
@@ -88,11 +88,11 @@ src/
 | --------------------- | -------------------------------------------- |
 | `features/products/`  | Product domain: API, hooks, types, UI        |
 | `components/shared/`  | Shared, domain-agnostic UI primitives      |
-| `hooks/` + `lib/`     | Cross-feature utilities (Escape key, URL helpers) |
+| `hooks/` + `lib/`     | Cross-feature utilities (HTTP client, Escape key, URL helpers) |
 
 ### Query keys
 
-Cache keys live in `src/features/products/api/client.ts` so invalidation and prefetch stay consistent:
+Cache keys live in `src/features/products/api/productsApi.ts` so invalidation and prefetch stay consistent:
 
 ```ts
 productKeys.infiniteList()  // paginated catalog
