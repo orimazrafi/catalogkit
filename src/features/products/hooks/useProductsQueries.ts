@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { getProductDetail, getProducts } from '../api/productsApi';
-import { productKeys } from '../lib/productKeys';
+import { productKeys } from '../api/client';
 import type { Product, ProductResponse } from '../types/product';
 
 const PRODUCTS_PAGE_SIZE = 12;

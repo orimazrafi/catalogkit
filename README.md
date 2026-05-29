@@ -52,23 +52,20 @@ src/
 ├── features/
 │   └── products/              # Product domain (feature-sliced)
 │       ├── api/
-│       │   ├── client.ts            # Axios instance
+│       │   ├── client.ts            # Axios instance + React Query keys
 │       │   └── productsApi.ts       # getProducts, getProductDetail
 │       ├── hooks/
 │       │   ├── useProductsQueries.ts
 │       │   └── useProductIdQueryParam.ts
 │       ├── types/
 │       │   └── product.ts
-│       ├── lib/
-│       │   └── productKeys.ts       # React Query cache keys
 │       ├── components/
 │       │   ├── ProductCard.tsx
 │       │   ├── ProductDetailDrawer.tsx
 │       │   └── ProductCatalog/      # List, grid, loading/error states
 │       └── index.ts                 # Public feature export
-├── components/
-│   └── ui/
-│       └── InfiniteScrollTrigger.tsx  # Shared, domain-agnostic UI
+├── common/
+│   └── InfiniteScrollTrigger.tsx      # Shared, domain-agnostic UI
 ├── hooks/
 │   └── useEscapeKey.ts            # Generic keyboard hook
 └── lib/
@@ -89,12 +86,12 @@ src/
 | Layer                 | Responsibility                               |
 | --------------------- | -------------------------------------------- |
 | `features/products/`  | Product domain: API, hooks, types, UI        |
-| `components/ui/`      | Shared, domain-agnostic UI primitives      |
+| `common/`             | Shared, domain-agnostic UI primitives      |
 | `hooks/` + `lib/`     | Cross-feature utilities (Escape key, URL helpers) |
 
 ### Query keys
 
-Cache keys live in `src/features/products/lib/productKeys.ts` so invalidation and prefetch stay consistent:
+Cache keys live in `src/features/products/api/client.ts` so invalidation and prefetch stay consistent:
 
 ```ts
 productKeys.infiniteList()  // paginated catalog
@@ -105,7 +102,7 @@ productKeys.detail(id)      // single product
 
 - **React Query over manual fetch state** — built-in caching, loading/error flags, and infinite query pagination.
 - **URL for drawer state** — deep-linking and native back/forward without extra global state.
-- **Feature folder (`features/products/`)** — colocates API, hooks, types, and UI for the product domain; shared pieces stay in `components/ui/`.
+- **Feature folder (`features/products/`)** — colocates API, hooks, types, and UI for the product domain; shared pieces stay in `common/`.
 - **No Redux** — server state in React Query, UI selection in URL + minimal local state (focus ref).
 - **IntersectionObserver for infinite scroll** — avoids scroll listeners and plays well with lazy-loaded images.
 
