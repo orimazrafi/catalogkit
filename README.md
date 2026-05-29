@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# Chargeflow Product Catalog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React product catalog built as a home assignment. It loads paginated products from [DummyJSON](https://dummyjson.com), supports infinite scroll, and opens product details in a slide-over drawer with URL-backed state.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Infinite product grid with intersection-observer pagination
+- Product detail drawer (price, category, stock, thumbnail)
+- URL query param for selected product (`?productId=12`) — shareable and browser back/forward friendly
+- React Query caching for list and detail requests
+- Keyboard support (Escape to close drawer, focus restored to clicked card)
+- Responsive layout with Tailwind CSS
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** + **TypeScript**
+- **Vite** — dev server and build
+- **TanStack Query** — server state, infinite queries, cache
+- **React Router** — URL search params for drawer state
+- **Axios** — HTTP client for DummyJSON API
+- **Tailwind CSS** — styling
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+
+- npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Install & run
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open [http://localhost:5173](http://localhost:5173).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Other scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start dev server         |
+| `npm run build`   | Typecheck + production build |
+| `npm run preview` | Preview production build |
+| `npm run lint`    | Run ESLint               |
+
+## Project Structure
+
 ```
+src/
+├── features/
+│   └── products/              # Product domain (feature-sliced)
+│       ├── api/
+│       │   ├── client.ts            # Axios instance
+│       │   └── productsApi.ts       # getProducts, getProductDetail
+│       ├── hooks/
+│       │   ├── useProductsQueries.ts
+│       │   └── useProductIdQueryParam.ts
+│       ├── types/
+│       │   └── product.ts
+│       ├── lib/
+│       │   └── productKeys.ts       # React Query cache keys
+│       ├── components/
+│       │   ├── ProductCard.tsx
+│       │   ├── ProductDetailDrawer.tsx
+│       │   └── ProductCatalog/      # List, grid, loading/error states
+│       └── index.ts                 # Public feature export
+├── components/
+│   └── ui/
+│       └── InfiniteScrollTrigger.tsx  # Shared, domain-agnostic UI
+├── hooks/
+│   └── useEscapeKey.ts            # Generic keyboard hook
+└── lib/
+    └── searchParams.ts            # URL search param utilities
+```
+
+## Architecture
+
+### Data flow
+
+1. **`ProductCatalog`** orchestrates the page: calls `useInfiniteProducts`, flattens pages into a single product array, and wires infinite scroll + drawer.
+2. **`useInfiniteProducts`** fetches paginated data via `getProducts(limit, skip)`. `getNextPageParam` computes the next `skip` offset from each page’s `skip`, `limit`, and `total`.
+3. **`useProductDetail`** fetches a single product when `productId` is set (enabled only when id is non-null, 5-minute `staleTime`).
+4. **`useProductIdQueryParam`** syncs the selected product with `?productId=` in the URL.
+
+### Layering
+
+| Layer                 | Responsibility                               |
+| --------------------- | -------------------------------------------- |
+| `features/products/`  | Product domain: API, hooks, types, UI        |
+| `components/ui/`      | Shared, domain-agnostic UI primitives      |
+| `hooks/` + `lib/`     | Cross-feature utilities (Escape key, URL helpers) |
+
+### Query keys
+
+Cache keys live in `src/features/products/lib/productKeys.ts` so invalidation and prefetch stay consistent:
+
+```ts
+productKeys.infiniteList()  // paginated catalog
+productKeys.detail(id)      // single product
+```
+
+## Key Decisions
+
+- **React Query over manual fetch state** — built-in caching, loading/error flags, and infinite query pagination.
+- **URL for drawer state** — deep-linking and native back/forward without extra global state.
+- **Feature folder (`features/products/`)** — colocates API, hooks, types, and UI for the product domain; shared pieces stay in `components/ui/`.
+- **No Redux** — server state in React Query, UI selection in URL + minimal local state (focus ref).
+- **IntersectionObserver for infinite scroll** — avoids scroll listeners and plays well with lazy-loaded images.
+
+## Tradeoffs & Possible Next Steps
+
+- Drawer uses a document-level Escape listener instead of a full focus trap (simpler; focus trap would be the next a11y step).
+- List/detail types are a subset of DummyJSON’s full product shape (enough for the assignment scope).
+- Could add: skeleton loaders, retry buttons on error, prefetch on card hover, Vitest for hooks/utils, route-based `/products/:id` instead of query param.
+
+## API
+
+Base URL: `https://dummyjson.com`
+
+- `GET /products?limit=&skip=` — paginated list
+- `GET /products/:id` — product detail

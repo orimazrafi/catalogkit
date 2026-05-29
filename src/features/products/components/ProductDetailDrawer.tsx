@@ -1,5 +1,5 @@
 import { Loader2, X } from 'lucide-react';
-import { useEscapeKey } from '../hooks/useEscapeKey';
+import { useEscapeKey } from '../../../hooks/useEscapeKey';
 import { useProductDetail } from '../hooks/useProductsQueries';
 
 interface ProductDetailDrawerProps {
@@ -17,8 +17,6 @@ export function ProductDetailDrawer({
 
   const isOpen = productId !== null;
 
-
-  // Close the drawer when the escape key is pressed.
   useEscapeKey(isOpen, onClose);
 
   return (

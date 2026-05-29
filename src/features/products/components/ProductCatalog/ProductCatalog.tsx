@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useProductIdQueryParam } from '../../hooks/useProductIdQueryParam';
 import { useInfiniteProducts } from '../../hooks/useProductsQueries';
+import { useProductIdQueryParam } from '../../hooks/useProductIdQueryParam';
 import { ProductDetailDrawer } from '../ProductDetailDrawer';
 import { ProductCatalogContent } from './ProductCatalogContent';
 import { ProductListError } from './ProductListError';

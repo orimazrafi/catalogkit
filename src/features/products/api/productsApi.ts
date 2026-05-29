@@ -1,9 +1,5 @@
-import axios from 'axios';
 import type { Product, ProductResponse } from '../types/product';
-
-const apiClient = axios.create({
-  baseURL: 'https://dummyjson.com',
-});
+import { apiClient } from './client';
 
 export async function getProducts(
   limit: number,

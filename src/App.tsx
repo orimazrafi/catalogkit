@@ -1,4 +1,4 @@
-import { ProductCatalog } from './components/ProductCatalog';
+import { ProductCatalog } from './features/products';
 
 function App() {
   return <ProductCatalog />;

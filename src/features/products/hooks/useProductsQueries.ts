@@ -1,5 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { getProductDetail, getProducts } from '../services/api';
+import { getProductDetail, getProducts } from '../api/productsApi';
+import { productKeys } from '../lib/productKeys';
 import type { Product, ProductResponse } from '../types/product';
 
 const PRODUCTS_PAGE_SIZE = 12;
@@ -17,7 +18,7 @@ function getNextProductsSkip(page: ProductResponse): number | undefined {
  */
 export function useInfiniteProducts() {
   return useInfiniteQuery<ProductResponse, Error>({
-    queryKey: ['products'],
+    queryKey: productKeys.infiniteList(),
     initialPageParam: 0,
     queryFn: ({ pageParam: skipOffset }) =>
       getProducts(PRODUCTS_PAGE_SIZE, skipOffset as number),
@@ -30,7 +31,7 @@ export function useInfiniteProducts() {
  */
 export function useProductDetail(id: number | null) {
   return useQuery<Product, Error>({
-    queryKey: ['product-detail', id],
+    queryKey: id !== null ? productKeys.detail(id) : productKeys.details(),
     queryFn: async () => {
       if (id === null) {
         throw new Error('Product id is required');

@@ -1,5 +1,5 @@
+import { InfiniteScrollTrigger } from '../../../../components/ui/InfiniteScrollTrigger';
 import type { Product } from '../../types/product';
-import { InfiniteScrollTrigger } from '../ui/InfiniteScrollTrigger';
 import { ProductGrid } from './ProductGrid';
 import { ProductListLoadingMore } from './ProductListLoadingMore';
 

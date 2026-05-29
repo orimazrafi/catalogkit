@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { withUpdatedSearchParam } from '../lib/searchParams';
+import { withUpdatedSearchParam } from '../../../lib/searchParams';
 
 function parseProductId(params: URLSearchParams): number | null {
   const productIdParam = params.get('productId');
