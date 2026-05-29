@@ -55,8 +55,7 @@ src/
 │       │   ├── client.ts            # Axios instance + React Query keys
 │       │   └── productsApi.ts       # getProducts, getProductDetail
 │       ├── hooks/
-│       │   ├── useProductsQueries.ts
-│       │   └── useProductIdQueryParam.ts
+│       │   └── useProductsQueries.ts
 │       ├── types/
 │       │   └── product.ts
 │       ├── components/
@@ -64,10 +63,12 @@ src/
 │       │   ├── ProductDetailDrawer.tsx
 │       │   └── ProductCatalog/      # List, grid, loading/error states
 │       └── index.ts                 # Public feature export
-├── common/
-│   └── InfiniteScrollTrigger.tsx      # Shared, domain-agnostic UI
+├── components/
+│   └── shared/
+│       └── InfiniteScrollTrigger.tsx  # Shared, domain-agnostic UI
 ├── hooks/
-│   └── useEscapeKey.ts            # Generic keyboard hook
+│   ├── useEscapeKey.ts                # Generic keyboard hook
+│   └── useQueryParam.ts               # Sync positive int with ?key= in URL
 └── lib/
     └── searchParams.ts            # URL search param utilities
 ```
@@ -79,14 +80,14 @@ src/
 1. **`ProductCatalog`** orchestrates the page: calls `useInfiniteProducts`, flattens pages into a single product array, and wires infinite scroll + drawer.
 2. **`useInfiniteProducts`** fetches paginated data via `getProducts(limit, skip)`. `getNextPageParam` computes the next `skip` offset from each page’s `skip`, `limit`, and `total`.
 3. **`useProductDetail`** fetches a single product when `productId` is set (enabled only when id is non-null, 5-minute `staleTime`).
-4. **`useProductIdQueryParam`** syncs the selected product with `?productId=` in the URL.
+4. **`useQueryParam('productId')`** syncs the selected product with `?productId=` in the URL.
 
 ### Layering
 
 | Layer                 | Responsibility                               |
 | --------------------- | -------------------------------------------- |
 | `features/products/`  | Product domain: API, hooks, types, UI        |
-| `common/`             | Shared, domain-agnostic UI primitives      |
+| `components/shared/`  | Shared, domain-agnostic UI primitives      |
 | `hooks/` + `lib/`     | Cross-feature utilities (Escape key, URL helpers) |
 
 ### Query keys
@@ -102,7 +103,7 @@ productKeys.detail(id)      // single product
 
 - **React Query over manual fetch state** — built-in caching, loading/error flags, and infinite query pagination.
 - **URL for drawer state** — deep-linking and native back/forward without extra global state.
-- **Feature folder (`features/products/`)** — colocates API, hooks, types, and UI for the product domain; shared pieces stay in `common/`.
+- **Feature folder (`features/products/`)** — colocates API, hooks, types, and UI for the product domain; shared pieces stay in `components/shared/`.
 - **No Redux** — server state in React Query, UI selection in URL + minimal local state (focus ref).
 - **IntersectionObserver for infinite scroll** — avoids scroll listeners and plays well with lazy-loaded images.
 

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { useInfiniteProducts } from '../../hooks/useProductsQueries';
-import { useProductIdQueryParam } from '../../hooks/useProductIdQueryParam';
+import { useQueryParam } from '../../../../hooks/useQueryParam';
 import { ProductDetailDrawer } from '../ProductDetailDrawer';
 import { ProductCatalogContent } from './ProductCatalogContent';
 import { ProductListError } from './ProductListError';
@@ -9,10 +9,10 @@ import { ProductListLoading } from './ProductListLoading';
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
 export function ProductCatalog() {
   const {
-    selectedProductId,
-    setSelectedProductId,
-    clearSelectedProductId,
-  } = useProductIdQueryParam();
+    value: selectedProductId,
+    setValue: setSelectedProductId,
+    clearValue: clearSelectedProductId,
+  } = useQueryParam('productId');
   const lastFocusedProductRef = useRef<HTMLButtonElement | null>(null);
 
   const {
