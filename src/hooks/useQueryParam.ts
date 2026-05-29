@@ -1,6 +1,21 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { withUpdatedSearchParam } from '../lib/searchParams';
+
+/** Returns a cloned URLSearchParams with one key updated or removed. */
+function withUpdatedSearchParam(
+  params: URLSearchParams,
+  key: string,
+  value: string | null,
+): URLSearchParams {
+  const nextParams = new URLSearchParams(params);
+  if (value === null) {
+    nextParams.delete(key);
+    return nextParams;
+  }
+
+  nextParams.set(key, value);
+  return nextParams;
+}
 
 /** Parses a URL search param as a positive integer, or null if missing/invalid. */
 function parsePositiveIntParam(

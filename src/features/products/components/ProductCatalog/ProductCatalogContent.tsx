@@ -1,7 +1,7 @@
 import { InfiniteScrollTrigger } from '../../../../components/shared/InfiniteScrollTrigger';
 import type { Product } from '../../types/product';
 import { ProductGrid } from './ProductGrid';
-import { ProductListLoadingMore } from './ProductListLoadingMore';
+import { InlineLoadingSpinner } from '../../../../components/shared/InlineLoadingSpinner';
 
 interface ProductCatalogContentProps {
   products: Product[];
@@ -23,7 +23,7 @@ export function ProductCatalogContent({
     <>
       <ProductGrid products={products} onProductClick={onProductClick} />
 
-      {isFetchingNextPage && <ProductListLoadingMore />}
+      {isFetchingNextPage && <InlineLoadingSpinner />}
 
       <InfiniteScrollTrigger
         onIntersect={onLoadMore}

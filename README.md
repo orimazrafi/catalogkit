@@ -67,10 +67,9 @@ src/
 │       └── InfiniteScrollTrigger.tsx  # Shared, domain-agnostic UI
 ├── hooks/
 │   ├── useEscapeKey.ts                # Generic keyboard hook
-│   └── useQueryParam.ts               # Sync positive int with ?key= in URL
+│   └── useQueryParam.ts               # Sync positive int with ?key= in the URL
 └── lib/
-    ├── apiClient.ts               # Global Axios instance
-    └── searchParams.ts            # URL search param utilities
+    └── apiClient.ts               # Global Axios instance
 ```
 
 ## Architecture
@@ -88,7 +87,7 @@ src/
 | --------------------- | -------------------------------------------- |
 | `features/products/`  | Product domain: API, hooks, types, UI        |
 | `components/shared/`  | Shared, domain-agnostic UI primitives      |
-| `hooks/` + `lib/`     | Cross-feature utilities (HTTP client, Escape key, URL helpers) |
+| `hooks/` + `lib/`     | Cross-feature utilities (HTTP client, Escape key, URL state) |
 
 ### Query keys
 
