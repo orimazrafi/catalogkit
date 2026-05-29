@@ -1,4 +1,5 @@
 import { Loader2, X } from 'lucide-react';
+import { ErrorBoundary } from '../../../components/shared/ErrorBoundary';
 import { useEscapeKey } from '../../../hooks/useEscapeKey';
 import { useProductDetail } from '../hooks/useProductsQueries';
 
@@ -20,7 +21,7 @@ export function ProductDetailDrawer({
   useEscapeKey(isOpen, onClose);
 
   return (
-    <>
+    <ErrorBoundary message="Unable to display product details.">
       <div
         className={`fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
@@ -103,6 +104,6 @@ export function ProductDetailDrawer({
           )}
         </div>
       </aside>
-    </>
+    </ErrorBoundary>
   );
 }

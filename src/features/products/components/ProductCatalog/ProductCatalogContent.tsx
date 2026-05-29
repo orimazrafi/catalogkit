@@ -1,4 +1,5 @@
 import { InfiniteScrollTrigger } from '../../../../components/shared/InfiniteScrollTrigger';
+import { ErrorBoundary } from '../../../../components/shared/ErrorBoundary';
 import type { Product } from '../../types/product';
 import { ProductGrid } from './ProductGrid';
 import { InlineSpinner } from '../../../../components/shared/InlineSpinner';
@@ -20,7 +21,7 @@ export function ProductCatalogContent({
   onLoadMore,
 }: ProductCatalogContentProps) {
   return (
-    <>
+    <ErrorBoundary message="Unable to display products.">
       <ProductGrid products={products} onProductClick={onProductClick} />
 
       {isFetchingNextPage && <InlineSpinner />}
@@ -29,6 +30,6 @@ export function ProductCatalogContent({
         onIntersect={onLoadMore}
         enabled={canLoadMorePages}
       />
-    </>
+    </ErrorBoundary>
   );
 }
