@@ -3,8 +3,8 @@ import { useInfiniteProducts } from '../../hooks/useProductsQueries';
 import { useQueryParam } from '../../../../hooks/useQueryParam';
 import { ProductDetailDrawer } from '../ProductDetailDrawer';
 import { ProductCatalogContent } from './ProductCatalogContent';
-import { ListError } from '../../../../components/shared/ListError';
-import { ListLoading } from '../../../../components/shared/ListLoading';
+import { ErrorBanner } from '../../../../components/shared/ErrorBanner';
+import { LoadingState } from '../../../../components/shared/LoadingState';
 
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
 export function ProductCatalog() {
@@ -66,10 +66,10 @@ export function ProductCatalog() {
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8">
-        {isLoading && <ListLoading message="Loading products…" />}
+        {isLoading && <LoadingState message="Loading products…" />}
 
         {isError && (
-          <ListError
+          <ErrorBanner
             message={error?.message ?? 'Failed to load products.'}
           />
         )}
