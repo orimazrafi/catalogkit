@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { ErrorBanner } from './ErrorBanner';
+
+import { ErrorBanner } from '@/components/shared/feedback/ErrorBanner';
 
 describe('ErrorBanner', () => {
   it('renders the default message', () => {

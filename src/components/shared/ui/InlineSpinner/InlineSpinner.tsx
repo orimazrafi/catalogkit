@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+
 import styles from './InlineSpinner.module.css';
 
 /** Compact centered spinner for secondary or in-progress loads. */

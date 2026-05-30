@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { apiClient } from '@/lib/apiClient';
-import {
-  mockProduct,
-  mockProductListResponse,
-} from './__mocks__';
+
 import {
   getProductDetail,
   getProducts,
   productKeys,
-} from './productsApi';
+} from '@/features/products/api';
+import { mockProduct, mockProductListResponse } from '@/features/products/api/__mocks__';
+import { apiClient } from '@/lib/apiClient';
 
-vi.mock('@/lib/apiClient', () => import('./__mocks__/apiClient'));
+vi.mock('@/lib/apiClient', () =>
+  import('@/features/products/api/__mocks__/apiClient'),
+);
 
 describe('productsApi', () => {
   beforeEach(() => {

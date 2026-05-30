@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+
 import styles from './LoadingState.module.css';
 
 interface LoadingStateProps {

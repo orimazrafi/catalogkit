@@ -1,5 +1,6 @@
-import type { Product } from '@/features/products/types/product';
+import type { Product } from '@/features/products';
 import { ProductCard } from '@/features/products/components/ProductCard';
+
 import styles from './ProductGrid.module.css';
 
 interface ProductGridProps {

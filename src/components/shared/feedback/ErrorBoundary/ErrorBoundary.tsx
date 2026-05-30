@@ -1,5 +1,6 @@
-import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
 import type { ReactNode } from 'react';
+import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
+
 import { ErrorBanner } from '@/components/shared/feedback/ErrorBanner';
 
 interface ErrorBoundaryProps {

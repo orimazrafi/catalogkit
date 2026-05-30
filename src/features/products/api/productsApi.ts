@@ -1,5 +1,6 @@
+import type { Product, ProductResponse } from '@/features/products';
+
 import { apiClient } from '@/lib/apiClient';
-import type { Product, ProductResponse } from '@/features/products/types/product';
 
 /** Centralized React Query cache keys for product-related queries. */
 export const productKeys = {

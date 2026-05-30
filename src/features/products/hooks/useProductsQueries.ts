@@ -1,10 +1,11 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+
+import type { Product, ProductResponse } from '@/features/products';
 import {
   getProductDetail,
   getProducts,
   productKeys,
-} from '@/features/products/api/productsApi';
-import type { Product, ProductResponse } from '@/features/products/types/product';
+} from '@/features/products/api';
 
 const PRODUCTS_PAGE_SIZE = 12;
 const PRODUCT_DETAIL_STALE_TIME_MS = 5 * 60 * 1000;

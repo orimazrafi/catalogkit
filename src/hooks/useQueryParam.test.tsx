@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react';
+
 import { renderHook, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import type { ReactNode } from 'react';
 import { describe, expect, it } from 'vitest';
+
 import { useQueryParam } from './useQueryParam';
 
 /** Wraps hook tests with an in-memory router and optional search string. */
