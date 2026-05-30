@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { ErrorBanner } from '@/components/shared/ErrorBanner';
-import { LoadingState } from '@/components/shared/LoadingState';
+import { ErrorBanner } from '@/components/shared/feedback/ErrorBanner';
+import { LoadingState } from '@/components/shared/feedback/LoadingState';
 import { ProductCatalogContent } from '@/features/products/components/ProductCatalogContent';
 import { ProductDetailDrawer } from '@/features/products/components/ProductDetailDrawer';
 import { useInfiniteProducts } from '@/features/products/hooks/useProductsQueries';

@@ -1,6 +1,6 @@
 import { Loader2, X } from 'lucide-react';
-import { ErrorBanner } from '@/components/shared/ErrorBanner';
-import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
+import { ErrorBanner } from '@/components/shared/feedback/ErrorBanner';
+import { ErrorBoundary } from '@/components/shared/feedback/ErrorBoundary';
 import { useProductDetail } from '@/features/products/hooks/useProductsQueries';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
 import styles from './ProductDetailDrawer.module.css';

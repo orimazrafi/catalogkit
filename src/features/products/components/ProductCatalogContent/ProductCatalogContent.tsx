@@ -1,6 +1,6 @@
-import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
-import { InfiniteScrollTrigger } from '@/components/shared/InfiniteScrollTrigger';
-import { InlineSpinner } from '@/components/shared/InlineSpinner';
+import { ErrorBoundary } from '@/components/shared/feedback/ErrorBoundary';
+import { InfiniteScrollTrigger } from '@/components/shared/ui/InfiniteScrollTrigger';
+import { InlineSpinner } from '@/components/shared/feedback/InlineSpinner';
 import type { Product } from '@/features/products/types/product';
 import { ProductGrid } from '@/features/products/components/ProductGrid';
 
