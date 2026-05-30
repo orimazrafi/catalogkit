@@ -2,7 +2,7 @@ import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
 import { InfiniteScrollTrigger } from '@/components/shared/InfiniteScrollTrigger';
 import { InlineSpinner } from '@/components/shared/InlineSpinner';
 import type { Product } from '@/features/products/types/product';
-import { ProductGrid } from './ProductGrid';
+import { ProductGrid } from '@/features/products/components/ProductGrid';
 
 interface ProductCatalogContentProps {
   products: Product[];

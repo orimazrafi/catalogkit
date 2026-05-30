@@ -1,7 +1,6 @@
 import { ProductCatalog } from '@/features/products';
 
-function App() {
+/** Root application shell. */
+export function App() {
   return <ProductCatalog />;
 }
-
-export default App;

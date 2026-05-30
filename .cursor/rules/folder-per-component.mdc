@@ -1,0 +1,37 @@
+---
+description: Folder-per-component pattern with index.ts pass-through gateways
+globs: src/**/*.tsx
+alwaysApply: true
+---
+
+# Folder-per-Component
+
+Every component lives in its own directory. Never leave flat `.tsx` files in a parent folder.
+
+## Folder layout
+
+```
+ComponentName/
+├── ComponentName.tsx      # UI logic, named export only
+├── index.ts               # export { ComponentName } from './ComponentName';
+├── ComponentName.module.css   # optional
+└── ComponentName.test.tsx   # optional
+```
+
+## Rules
+
+- **Never** use `index.tsx` for component logic — keeps Ctrl+P search precise.
+- **Always** add `index.ts` as the only public gateway; imports use the folder path:
+  `import { ProductCard } from '@/features/products/components/ProductCard'`
+- Use **named exports** in the `.tsx` file.
+- Co-locate `.module.css` and `.test.tsx` in the same folder.
+
+## Example
+
+```tsx
+// ProductCard/ProductCard.tsx
+export function ProductCard() { ... }
+
+// ProductCard/index.ts
+export { ProductCard } from './ProductCard';
+```

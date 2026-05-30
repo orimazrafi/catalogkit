@@ -17,9 +17,6 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
-      parserOptions: {
-        project: "./tsconfig.json", // 👈 This tells ESLint to read your TS path configs!
-      },
     },
   },
 ])

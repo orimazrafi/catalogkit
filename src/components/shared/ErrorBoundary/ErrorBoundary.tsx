@@ -1,6 +1,6 @@
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary';
 import type { ReactNode } from 'react';
-import { ErrorBanner } from './ErrorBanner';
+import { ErrorBanner } from '@/components/shared/ErrorBanner';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
