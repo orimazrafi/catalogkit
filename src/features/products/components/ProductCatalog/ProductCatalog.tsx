@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 import { ErrorBanner } from '@/components/shared/ErrorBanner';
 import { LoadingState } from '@/components/shared/LoadingState';
-import { ProductDetailDrawer } from '@/features/products/components/ProductDetailDrawer';
+import { ProductDetailDrawer } from '@/features/products/components/ProductDetailDrawer/ProductDetailDrawer';
 import { useInfiniteProducts } from '@/features/products/hooks/useProductsQueries';
 import { useQueryParam } from '@/hooks/useQueryParam';
 import { ProductCatalogContent } from './ProductCatalogContent';
