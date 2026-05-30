@@ -1,8 +1,8 @@
-import { InfiniteScrollTrigger } from '../../../../components/shared/InfiniteScrollTrigger';
-import { ErrorBoundary } from '../../../../components/shared/ErrorBoundary';
-import type { Product } from '../../types/product';
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
+import { InfiniteScrollTrigger } from '@/components/shared/InfiniteScrollTrigger';
+import { InlineSpinner } from '@/components/shared/InlineSpinner';
+import type { Product } from '@/features/products/types/product';
 import { ProductGrid } from './ProductGrid';
-import { InlineSpinner } from '../../../../components/shared/InlineSpinner';
 
 interface ProductCatalogContentProps {
   products: Product[];

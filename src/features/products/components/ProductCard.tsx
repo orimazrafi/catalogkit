@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react';
-import type { Product } from '../types/product';
+import type { Product } from '@/features/products/types/product';
 
 interface ProductCardProps {
   product: Product;

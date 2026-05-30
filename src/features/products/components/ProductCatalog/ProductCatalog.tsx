@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { useInfiniteProducts } from '../../hooks/useProductsQueries';
-import { useQueryParam } from '../../../../hooks/useQueryParam';
-import { ProductDetailDrawer } from '../ProductDetailDrawer';
+import { ErrorBanner } from '@/components/shared/ErrorBanner';
+import { LoadingState } from '@/components/shared/LoadingState';
+import { ProductDetailDrawer } from '@/features/products/components/ProductDetailDrawer';
+import { useInfiniteProducts } from '@/features/products/hooks/useProductsQueries';
+import { useQueryParam } from '@/hooks/useQueryParam';
 import { ProductCatalogContent } from './ProductCatalogContent';
-import { ErrorBanner } from '../../../../components/shared/ErrorBanner';
-import { LoadingState } from '../../../../components/shared/LoadingState';
 
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
 export function ProductCatalog() {

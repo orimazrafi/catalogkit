@@ -1,7 +1,7 @@
 import { Loader2, X } from 'lucide-react';
-import { ErrorBoundary } from '../../../components/shared/ErrorBoundary';
-import { useEscapeKey } from '../../../hooks/useEscapeKey';
-import { useProductDetail } from '../hooks/useProductsQueries';
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
+import { useProductDetail } from '@/features/products/hooks/useProductsQueries';
+import { useEscapeKey } from '@/hooks/useEscapeKey';
 
 interface ProductDetailDrawerProps {
   productId: number | null;

@@ -1,4 +1,4 @@
-import { ProductCatalog } from './features/products';
+import { ProductCatalog } from '@/features/products';
 
 function App() {
   return <ProductCatalog />;
