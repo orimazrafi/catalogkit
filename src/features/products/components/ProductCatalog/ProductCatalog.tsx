@@ -5,6 +5,7 @@ import { ProductDetailDrawer } from '@/features/products/components/ProductDetai
 import { useInfiniteProducts } from '@/features/products/hooks/useProductsQueries';
 import { useQueryParam } from '@/hooks/useQueryParam';
 import { ProductCatalogContent } from './ProductCatalogContent';
+import styles from './ProductCatalog.module.css';
 
 /** Catalog container: fetches products, coordinates grid, scroll, and drawer. */
 export function ProductCatalog() {
@@ -34,7 +35,6 @@ export function ProductCatalog() {
 
   const handleLoadMore = useCallback(() => {
     if (canLoadMorePages) {
-      // Fetch the next page; React Query appends it to the cache (data.pages).
       void fetchNextPage();
     }
   }, [canLoadMorePages, fetchNextPage]);
@@ -55,17 +55,17 @@ export function ProductCatalog() {
   }, [clearSelectedProductId]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <header className="border-b border-slate-800 bg-slate-900/50 px-6 py-8 backdrop-blur">
-        <div className="mx-auto max-w-7xl">
-          <h1 className="text-3xl font-bold tracking-tight">Products</h1>
-          <p className="mt-2 text-slate-400">
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <div className={styles.container}>
+          <h1 className={styles.title}>Products</h1>
+          <p className={styles.subtitle}>
             Browse the catalog — scroll for more, click a card for details.
           </p>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-8">
+      <main className={styles.main}>
         {isLoading && <LoadingState message="Loading products…" />}
 
         {isError && (

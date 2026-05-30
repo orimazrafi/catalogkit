@@ -1,5 +1,6 @@
 import type { Product } from '@/features/products/types/product';
 import { ProductCard } from '@/features/products/components/ProductCard/ProductCard';
+import styles from './ProductGrid.module.css';
 
 interface ProductGridProps {
   products: Product[];
@@ -9,7 +10,7 @@ interface ProductGridProps {
 /** Responsive grid of product cards. */
 export function ProductGrid({ products, onProductClick }: ProductGridProps) {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className={styles.grid}>
       {products.map((product) => (
         <ProductCard
           key={product.id}

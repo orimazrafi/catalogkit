@@ -1,0 +1,35 @@
+.page {
+  min-height: 100vh;
+  background-color: #020617;
+  color: #f1f5f9;
+}
+
+.header {
+  border-bottom: 1px solid #1e293b;
+  background-color: rgba(15, 23, 42, 0.5);
+  padding: 2rem 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  margin: 0.5rem 0 0;
+  color: #94a3b8;
+}
+
+.main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}

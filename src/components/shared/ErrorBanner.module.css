@@ -1,0 +1,16 @@
+.banner {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 1rem;
+  color: #fca5a5;
+}
+
+.bannerSmall {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 1rem;
+  color: #fca5a5;
+  font-size: 0.875rem;
+}

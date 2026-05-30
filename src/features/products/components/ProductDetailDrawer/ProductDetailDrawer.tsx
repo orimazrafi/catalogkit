@@ -1,7 +1,9 @@
 import { Loader2, X } from 'lucide-react';
+import { ErrorBanner } from '@/components/shared/ErrorBanner';
 import { ErrorBoundary } from '@/components/shared/ErrorBoundary';
 import { useProductDetail } from '@/features/products/hooks/useProductsQueries';
 import { useEscapeKey } from '@/hooks/useEscapeKey';
+import styles from './ProductDetailDrawer.module.css';
 
 interface ProductDetailDrawerProps {
   productId: number | null;
@@ -23,80 +25,68 @@ export function ProductDetailDrawer({
   return (
     <ErrorBoundary message="Unable to display product details.">
       <div
-        className={`fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
+        className={`${styles.backdrop} ${isOpen ? styles.backdropOpen : styles.backdropClosed}`}
         onClick={onClose}
         aria-hidden={!isOpen}
       />
       <aside
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col border-l border-slate-800 bg-slate-900 shadow-2xl transition-transform duration-300 ease-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`${styles.drawer} ${isOpen ? styles.drawerOpen : styles.drawerClosed}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-detail-title"
         aria-hidden={!isOpen}
       >
-        <header className="flex items-center justify-between border-b border-slate-800 px-6 py-4">
-          <h2
-            id="product-detail-title"
-            className="text-lg font-semibold text-slate-100"
-          >
+        <header className={styles.header}>
+          <h2 id="product-detail-title" className={styles.headerTitle}>
             Product details
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-slate-100"
+            className={styles.closeButton}
             aria-label="Close product details"
           >
-            <X className="h-5 w-5" />
+            <X className={styles.closeIcon} />
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className={styles.content}>
           {isLoading && (
-            <div className="flex flex-col items-center justify-center gap-3 py-16 text-slate-400">
-              <Loader2 className="h-8 w-8 animate-spin text-indigo-400" />
-              <p className="text-sm">Loading product…</p>
+            <div className={styles.loading}>
+              <Loader2 className={`${styles.loadingIcon} spin`} />
+              <p className={styles.message}>Loading product…</p>
             </div>
           )}
 
           {isError && (
-            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300">
-              {error?.message ?? 'Failed to load product details.'}
-            </div>
+            <ErrorBanner
+              size="small"
+              message={error?.message ?? 'Failed to load product details.'}
+            />
           )}
 
           {product && !isLoading && (
-            <div className="flex flex-col gap-6 opacity-100 transition-opacity duration-300">
-              <div className="overflow-hidden rounded-xl bg-slate-800">
+            <div className={styles.details}>
+              <div className={styles.imageWrapper}>
                 <img
                   src={product.thumbnail}
                   alt={product.title}
-                  className="aspect-video w-full object-cover"
+                  className={styles.image}
                 />
               </div>
-              <div className="space-y-4">
-                <span className="inline-block rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-medium uppercase tracking-wide text-indigo-300">
-                  {product.category}
-                </span>
-                <h3 className="text-2xl font-bold text-slate-50">
-                  {product.title}
-                </h3>
-                <dl className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="rounded-lg bg-slate-800/80 p-4">
-                    <dt className="text-slate-400">Price</dt>
-                    <dd className="mt-1 text-xl font-bold text-emerald-400">
+              <div className={styles.meta}>
+                <span className={styles.category}>{product.category}</span>
+                <h3 className={styles.productTitle}>{product.title}</h3>
+                <dl className={styles.stats}>
+                  <div className={styles.statCard}>
+                    <dt className={styles.statLabel}>Price</dt>
+                    <dd className={styles.statValuePrice}>
                       ${product.price.toFixed(2)}
                     </dd>
                   </div>
-                  <div className="rounded-lg bg-slate-800/80 p-4">
-                    <dt className="text-slate-400">Stock</dt>
-                    <dd className="mt-1 text-xl font-bold text-slate-100">
-                      {product.stock}
-                    </dd>
+                  <div className={styles.statCard}>
+                    <dt className={styles.statLabel}>Stock</dt>
+                    <dd className={styles.statValueStock}>{product.stock}</dd>
                   </div>
                 </dl>
               </div>

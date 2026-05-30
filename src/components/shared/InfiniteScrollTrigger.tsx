@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import styles from './InfiniteScrollTrigger.module.css';
 
 interface InfiniteScrollTriggerProps {
   /** Called when the sentinel scrolls into view (e.g. fetch next page). */
@@ -27,28 +28,19 @@ export function InfiniteScrollTrigger({
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        // Only fire when visible and parent allows loading (avoids duplicate fetches).
         if (entry?.isIntersecting && enabled) {
           onIntersect();
         }
       },
-      // Preload the next page slightly before the sentinel is fully on screen.
       { rootMargin: '120px' },
     );
 
-    // Start watching the sentinel: when it enters the viewport, the callback above runs.
     observer.observe(element);
 
-    // Disconnect on unmount or when deps change so we never leak observers.
     return () => observer.disconnect();
   }, [enabled, onIntersect]);
 
-  // Zero-UI anchor element observed by IntersectionObserver.
   return (
-    <div
-      ref={sentinelRef}
-      className="flex h-16 w-full items-center justify-center"
-      aria-hidden
-    />
+    <div ref={sentinelRef} className={styles.sentinel} aria-hidden />
   );
 }

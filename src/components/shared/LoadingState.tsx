@@ -1,4 +1,5 @@
 import { Loader2 } from 'lucide-react';
+import styles from './LoadingState.module.css';
 
 interface LoadingStateProps {
   message?: string;
@@ -7,8 +8,8 @@ interface LoadingStateProps {
 /** Full-area loading placeholder with spinner and optional message. */
 export function LoadingState({ message = 'Loading…' }: LoadingStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 py-24 text-slate-400">
-      <Loader2 className="h-10 w-10 animate-spin text-indigo-400" />
+    <div className={styles.container}>
+      <Loader2 className={`${styles.icon} spin`} />
       <p>{message}</p>
     </div>
   );

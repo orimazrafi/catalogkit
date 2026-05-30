@@ -1,0 +1,7 @@
+.sentinel {
+  display: flex;
+  height: 4rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
