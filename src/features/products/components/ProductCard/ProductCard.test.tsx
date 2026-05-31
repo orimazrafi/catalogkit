@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { mockCatalogProduct } from '@/features/products/api/__mocks__';
 
@@ -8,7 +7,7 @@ import { ProductCard } from './ProductCard';
 
 describe('ProductCard', () => {
   it('renders product details', () => {
-    render(<ProductCard product={mockCatalogProduct} onClick={vi.fn()} />);
+    render(<ProductCard product={mockCatalogProduct} />);
 
     expect(screen.getByRole('button', { name: /iphone 14/i })).toBeInTheDocument();
     expect(screen.getByText('smartphones')).toBeInTheDocument();
@@ -19,13 +18,12 @@ describe('ProductCard', () => {
     );
   });
 
-  it('calls onClick when the card is clicked', async () => {
-    const user = userEvent.setup();
-    const handleClick = vi.fn();
+  it('exposes the product id for grid-level event delegation', () => {
+    render(<ProductCard product={mockCatalogProduct} />);
 
-    render(<ProductCard product={mockCatalogProduct} onClick={handleClick} />);
-    await user.click(screen.getByRole('button', { name: /iphone 14/i }));
-
-    expect(handleClick).toHaveBeenCalledOnce();
+    expect(screen.getByRole('button', { name: /iphone 14/i })).toHaveAttribute(
+      'data-product-id',
+      String(mockCatalogProduct.id),
+    );
   });
 });

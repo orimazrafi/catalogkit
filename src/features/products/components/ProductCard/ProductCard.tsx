@@ -1,18 +1,19 @@
-import type { MouseEvent } from 'react';
-
 import type { Product } from '@/features/products';
 
 import styles from './ProductCard.module.css';
 
 interface ProductCardProps {
   product: Product;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 /** Clickable product summary card for the catalog grid. */
-export function ProductCard({ product, onClick }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   return (
-    <button type="button" onClick={onClick} className={styles.card}>
+    <button
+      type="button"
+      data-product-id={product.id}
+      className={styles.card}
+    >
       <div className={styles.imageWrapper}>
         <img
           src={product.thumbnail}

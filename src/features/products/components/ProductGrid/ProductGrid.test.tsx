@@ -14,7 +14,7 @@ describe('ProductGrid', () => {
     expect(screen.getByRole('button', { name: /laptop/i })).toBeInTheDocument();
   });
 
-  it('passes the clicked product id to onProductClick', async () => {
+  it('delegates card clicks to onProductClick', async () => {
     const user = userEvent.setup();
     const handleProductClick = vi.fn();
 
@@ -31,5 +31,21 @@ describe('ProductGrid', () => {
     expect(handleProductClick.mock.calls[0]?.[1]).toBeInstanceOf(
       HTMLButtonElement,
     );
+  });
+
+  it('delegates clicks on nested card content to onProductClick', async () => {
+    const user = userEvent.setup();
+    const handleProductClick = vi.fn();
+
+    render(
+      <ProductGrid
+        products={mockCatalogProducts}
+        onProductClick={handleProductClick}
+      />,
+    );
+    await user.click(screen.getByRole('img', { name: 'Laptop' }));
+
+    expect(handleProductClick).toHaveBeenCalledOnce();
+    expect(handleProductClick.mock.calls[0]?.[0]).toBe(2);
   });
 });
