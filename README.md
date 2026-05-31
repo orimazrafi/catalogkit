@@ -1,6 +1,8 @@
-# Chargeflow Product Catalog
+# CatalogKit
 
-A React product catalog built as a home assignment. It loads paginated products from [DummyJSON](https://dummyjson.com), supports infinite scroll, and opens product details in a slide-over drawer with URL-backed state.
+A React product catalog demo. It loads paginated products from [DummyJSON](https://dummyjson.com), supports infinite scroll, and opens product details in a slide-over drawer with URL-backed state.
+
+**Live demo:** [https://orimazrafi.github.io/catalogkit/](https://orimazrafi.github.io/catalogkit/)
 
 ## Features
 
@@ -39,6 +41,14 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
+
+### Deploy (GitHub Pages)
+
+Pushes to `main` or `master` run tests, build with `VITE_BASE_PATH=/catalogkit/`, and deploy via GitHub Actions.
+
+1. Create the public repo and push (see below if starting fresh).
+2. In the repo on GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+3. After the workflow succeeds, the site is live at `https://<username>.github.io/catalogkit/`.
 
 ### Other scripts
 

@@ -9,10 +9,11 @@ import './index.css';
 import { App } from './App.tsx';
 
 const queryClient = new QueryClient();
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename || undefined}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
